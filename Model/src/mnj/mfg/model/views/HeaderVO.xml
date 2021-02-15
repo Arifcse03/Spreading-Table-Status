@@ -127,7 +127,7 @@
          S.style
 FROM MNJ_MFG_SPREADING_T_H HeaderEO ,XX_OM_POC_H_T S
 WHERE HeaderEO.DIVISION_ID = :p_org_id
-and HeaderEO.POC_ID=s.POC_ID order by  HeaderEO.HEADER_ID desc]]>
+and HeaderEO.POC_ID=s.POC_ID]]>
   </SQLQuery>
   <EntityUsage
     Name="HeaderEO"

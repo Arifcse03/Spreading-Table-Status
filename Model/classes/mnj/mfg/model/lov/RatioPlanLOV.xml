@@ -31,7 +31,7 @@
     <TransientExpression><![CDATA[adf.context.sessionScope.orgId]]></TransientExpression>
   </Variable>
   <SQLQuery>
-    <![CDATA[select h.ratioplan_number,ph.POC_ID, ph.style,ph.season,ph.BUYER_ID, (select ar.CUSTOMER_NAME
+    <![CDATA[select distinct h.ratioplan_number,ph.POC_ID, ph.style,ph.season,ph.BUYER_ID, (select ar.CUSTOMER_NAME
           from ar_customers ar
          where ar.CUSTOMER_ID = ph.buyer_id) Buyer_NAME 
 from MNJ_MFG_RATIOPLAN h, xx_om_poc_h_t ph,xx_om_poc_l_t pl
