@@ -1,0 +1,453 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:messages id="m1"/>
+      <af:form id="f1">
+        <af:panelHeader text="Spreading Table Status" id="ph1">
+          <f:facet name="context"/>
+          <f:facet name="menuBar"/>
+          <f:facet name="toolbar"/>
+          <f:facet name="legend"/>
+          <f:facet name="info"/>
+          <af:panelFormLayout id="pfl1" maxColumns="2" rows="3"
+                              inlineStyle="height:200px; width:1000.0px;"
+                              labelAlignment="start">
+            <af:inputText value="#{bindings.Attribute1.inputValue}"
+                          label="Sr. No"
+                          required="#{bindings.Attribute1.hints.mandatory}"
+                          columns="#{bindings.Attribute1.hints.displayWidth}"
+                          maximumLength="#{bindings.Attribute1.hints.precision}"
+                          shortDesc="#{bindings.Attribute1.hints.tooltip}"
+                          id="it2" readOnly="true">
+              <f:validator binding="#{bindings.Attribute1.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.Attribute2.inputValue}"
+                          label="Unit Name"
+                          required="#{bindings.Attribute2.hints.mandatory}"
+                          columns="#{bindings.Attribute2.hints.displayWidth}"
+                          maximumLength="#{bindings.Attribute2.hints.precision}"
+                          shortDesc="#{bindings.Attribute2.hints.tooltip}"
+                          id="it9" readOnly="true">
+              <f:validator binding="#{bindings.Attribute2.validator}"/>
+            </af:inputText>
+            <af:inputListOfValues id="tableNoId"
+                                  popupTitle="Search and Select: #{bindings.TableNo.hints.label}"
+                                  value="#{bindings.TableNo.inputValue}"
+                                  label="Table No."
+                                  model="#{bindings.TableNo.listOfValuesModel}"
+                                  required="#{bindings.TableNo.hints.mandatory}"
+                                  columns="#{bindings.TableNo.hints.displayWidth}"
+                                  shortDesc="#{bindings.TableNo.hints.tooltip}">
+              <f:validator binding="#{bindings.TableNo.validator}"/>
+              <af:autoSuggestBehavior suggestedItems="#{bindings.TableNo.suggestedItems}"/>
+            </af:inputListOfValues>
+            <af:inputDate value="#{bindings.SpredingDate.inputValue}"
+                          label="Date"
+                          required="#{bindings.SpredingDate.hints.mandatory}"
+                          shortDesc="#{bindings.SpredingDate.hints.tooltip}"
+                          id="id1">
+              <f:validator binding="#{bindings.SpredingDate.validator}"/>
+              <af:convertDateTime pattern="#{bindings.SpredingDate.format}"/>
+            </af:inputDate>
+            <af:inputText value="#{bindings.AdditionalLayLength.inputValue}"
+                          label="Additional Lay Length (Inch)"
+                          required="#{bindings.AdditionalLayLength.hints.mandatory}"
+                          columns="#{bindings.AdditionalLayLength.hints.displayWidth}"
+                          maximumLength="#{bindings.AdditionalLayLength.hints.precision}"
+                          shortDesc="#{bindings.AdditionalLayLength.hints.tooltip}"
+                          id="it4" binding="#{Main.additionalLayLength}"
+                          autoSubmit="true">
+              <f:validator binding="#{bindings.AdditionalLayLength.validator}"/>
+            </af:inputText>
+            <af:inputListOfValues id="planNumberId"
+                                  popupTitle="Search and Select: #{bindings.PlanNumber.hints.label}"
+                                  value="#{bindings.PlanNumber.inputValue}"
+                                  label="#{bindings.PlanNumber.hints.label}"
+                                  model="#{bindings.PlanNumber.listOfValuesModel}"
+                                  required="#{bindings.PlanNumber.hints.mandatory}"
+                                  columns="#{bindings.PlanNumber.hints.displayWidth}"
+                                  shortDesc="#{bindings.PlanNumber.hints.tooltip}">
+              <f:validator binding="#{bindings.PlanNumber.validator}"/>
+            </af:inputListOfValues>
+            <af:panelLabelAndMessage label="POC ID :"
+                                     id="plam1">
+              <af:outputText value="#{bindings.PocId.inputValue}" id="ot2">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.PocId.format}"/>
+              </af:outputText>
+            </af:panelLabelAndMessage>
+            <f:facet name="footer">
+              <af:group id="g1">
+                <af:spacer width="10" height="10" id="spacer2"/>
+                <af:spacer width="10" height="10" id="spacer1"/>
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                  <af:spacer width="10" height="10" id="s1"/>
+                  <af:panelGroupLayout layout="horizontal" id="pgl2">
+                    <af:spacer width="200" height="10" id="s2"/>
+                    <af:commandButton actionListener="#{bindings.First.execute}"
+                                      text="First"
+                                      disabled="#{!bindings.First.enabled}"
+                                      partialSubmit="true" id="cb2"
+                                      visible="false"/>
+                    <af:commandButton actionListener="#{bindings.Previous.execute}"
+                                      text="Previous"
+                                      disabled="#{!bindings.Previous.enabled}"
+                                      partialSubmit="true" id="cb3"
+                                      visible="false"/>
+                    <af:commandButton actionListener="#{bindings.Next.execute}"
+                                      text="Next"
+                                      disabled="#{!bindings.Next.enabled}"
+                                      partialSubmit="true" id="cb4"
+                                      visible="false"/>
+                    <af:commandButton actionListener="#{bindings.Last.execute}"
+                                      text="Last"
+                                      disabled="#{!bindings.Last.enabled}"
+                                      partialSubmit="true" id="cb1"
+                                      visible="false"/>
+                    <af:commandButton actionListener="#{bindings.Rollback.execute}"
+                                      text="Back" immediate="true" id="cb6"
+                                      action="Back">
+                      <af:resetActionListener/>
+                    </af:commandButton>
+                    <af:commandButton actionListener="#{bindings.Commit.execute}"
+                                      text="Save"
+                                      id="cb5"/>
+                    <af:commandButton text="Calculate Plan and Actual Lay Length" id="cb9"
+                                      action="#{Main.calculation}"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:group>
+            </f:facet>
+            <af:panelLabelAndMessage label="Buyer Name:"
+                                     id="plam2">
+              <af:outputText value="#{bindings.BuyerName.inputValue}" id="ot3"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Season :"
+                                     id="plam3">
+              <af:outputText value="#{bindings.Season.inputValue}" id="ot4"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Style :"
+                                     id="plam5">
+              <af:outputText value="#{bindings.Style.inputValue}" id="ot6"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="#{bindings.BuyerId.hints.label}"
+                                     id="plam4" partialTriggers="planNumberId"
+                                     visible="false">
+              <af:outputText value="#{bindings.BuyerId.inputValue}" id="ot5">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.BuyerId.format}"/>
+              </af:outputText>
+            </af:panelLabelAndMessage>
+          </af:panelFormLayout>
+        </af:panelHeader>
+        <af:panelHeader text="Spreading Lines" id="ph2"
+                        inlineStyle="width:1000.0px;">
+          <f:facet name="context"/>
+          <f:facet name="menuBar"/>
+          <f:facet name="toolbar"/>
+          <f:facet name="legend"/>
+          <f:facet name="info"/>
+          <af:panelCollection id="pc1" inlineStyle="width:1289px;">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar">
+              <af:toolbar id="t2">
+                <af:commandButton actionListener="#{bindings.CreateInsert.execute}"
+                                  text="Create"
+                                  id="cb7"/>
+                <af:commandButton actionListener="#{bindings.Delete.execute}"
+                                  text="Delete"
+                                  id="cb8"/>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.LinesVO1.collectionModel}" var="row"
+                      rows="#{bindings.LinesVO1.rangeSize}"
+                      emptyText="#{bindings.LinesVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.LinesVO1.rangeSize}"
+                      rowBandingInterval="0"
+                      filterModel="#{bindings.LinesVO1Query.queryDescriptor}"
+                      queryListener="#{bindings.LinesVO1Query.processQuery}"
+                      filterVisible="true" varStatus="vs"
+                      selectedRowKeys="#{bindings.LinesVO1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.LinesVO1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t1"
+                      partialTriggers="::cb7 ::cb8"
+                      binding="#{Main.markeridTable}">
+              <af:column id="column1" headerText="Sr. No" align="center"
+                         width="80">
+                <af:outputText value="#{vs.index+1}" id="ot1"/>
+              </af:column>
+              <af:column headerText="CUT NUMBER"
+                         id="c20" align="center" width="120">
+                <af:inputListOfValues id="attribute1Id"
+                                      popupTitle="Search and Select: #{bindings.LinesVO1.hints.Attribute1.label}"
+                                      value="#{row.bindings.Attribute1.inputValue}"
+                                      model="#{row.bindings.Attribute1.listOfValuesModel}"
+                                      required="#{bindings.LinesVO1.hints.Attribute1.mandatory}"
+                                      columns="#{bindings.LinesVO1.hints.Attribute1.displayWidth}"
+                                      shortDesc="#{bindings.LinesVO1.hints.Attribute1.tooltip}">
+                  <f:validator binding="#{row.bindings.Attribute1.validator}"/>
+                </af:inputListOfValues>
+              </af:column>
+              <af:column headerText="Ratio Plan No"
+                         id="c4" align="center" width="115">
+                <af:inputListOfValues id="cutNumberId"
+                                      popupTitle="Search and Select: #{bindings.LinesVO1.hints.CutNumber.label}"
+                                      value="#{row.bindings.CutNumber.inputValue}"
+                                      model="#{row.bindings.CutNumber.listOfValuesModel}"
+                                      required="#{bindings.LinesVO1.hints.CutNumber.mandatory}"
+                                      columns="#{bindings.LinesVO1.hints.CutNumber.displayWidth}"
+                                      shortDesc="#{bindings.LinesVO1.hints.CutNumber.tooltip}"
+                                      autoSubmit="true" readOnly="true"
+                                      partialTriggers="attribute1Id">
+                  <f:validator binding="#{row.bindings.CutNumber.validator}"/>
+                  <af:autoSuggestBehavior suggestedItems="#{row.bindings.CutNumber.suggestedItems}"/>
+                </af:inputListOfValues>
+              </af:column>
+              <af:column headerText="MARKER ID"
+                         id="c5" align="center" width="115">
+                <af:inputListOfValues id="markerIdId"
+                                      popupTitle="Search and Select: #{bindings.LinesVO1.hints.MarkerId.label}"
+                                      value="#{row.bindings.MarkerId.inputValue}"
+                                      model="#{row.bindings.MarkerId.listOfValuesModel}"
+                                      required="#{bindings.LinesVO1.hints.MarkerId.mandatory}"
+                                      columns="#{bindings.LinesVO1.hints.MarkerId.displayWidth}"
+                                      shortDesc="#{bindings.LinesVO1.hints.MarkerId.tooltip}"
+                                      autoSubmit="true"
+                                      partialTriggers="attribute1Id"
+                                      readOnly="true">
+                  <f:validator binding="#{row.bindings.MarkerId.validator}"/>
+                  <af:autoSuggestBehavior suggestedItems="#{bindings.LinesVO1.hints.MarkerId.suggestedItems}"/>
+                </af:inputListOfValues>
+              </af:column>
+              <af:column headerText="NO OF PLY"
+                         id="c3" align="center">
+                <af:inputText value="#{row.bindings.NoOfPly.inputValue}"
+                              label="#{bindings.LinesVO1.hints.NoOfPly.label}"
+                              required="#{bindings.LinesVO1.hints.NoOfPly.mandatory}"
+                              columns="#{bindings.LinesVO1.hints.NoOfPly.displayWidth}"
+                              maximumLength="#{bindings.LinesVO1.hints.NoOfPly.precision}"
+                              shortDesc="#{bindings.LinesVO1.hints.NoOfPly.tooltip}"
+                              id="it10" partialTriggers="attribute1Id">
+                  <f:validator binding="#{row.bindings.NoOfPly.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="Auto / Manual"
+                         id="c10" align="center" width="115">
+                <af:selectOneChoice value="#{row.bindings.AutoManual.inputValue}"
+                                    label="#{row.bindings.AutoManual.label}"
+                                    required="#{bindings.LinesVO1.hints.AutoManual.mandatory}"
+                                    shortDesc="#{bindings.LinesVO1.hints.AutoManual.tooltip}"
+                                    id="soc1" partialTriggers="id2">
+                  <f:selectItems value="#{row.bindings.AutoManual.items}"
+                                 id="si1"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column id="c16" headerText="TIME" align="center" width="210">
+                <af:column sortProperty="StartTime" filterable="true"
+                           sortable="true" headerText="START TIME" id="c6"
+                           align="center">
+                  <f:facet name="filter">
+                    <af:inputDate value="#{vs.filterCriteria.StartTime}"
+                                  id="id7"/>
+                  </f:facet>
+                  <af:inputDate value="#{row.bindings.StartTime.inputValue}"
+                                label="#{bindings.LinesVO1.hints.StartTime.label}"
+                                required="#{bindings.LinesVO1.hints.StartTime.mandatory}"
+                                shortDesc="#{bindings.LinesVO1.hints.StartTime.tooltip}"
+                                id="id2" binding="#{Main.startTime}"
+                                valueChangeListener="#{Main.valueChangerDate}"
+                                autoSubmit="true">
+                    <f:validator binding="#{row.bindings.StartTime.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.LinesVO1.hints.StartTime.format}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column sortProperty="EndTime" filterable="true"
+                           sortable="true" headerText="END TIME" id="c15"
+                           align="center">
+                  <f:facet name="filter">
+                    <af:inputDate value="#{vs.filterCriteria.EndTime}"
+                                  id="id6"/>
+                  </f:facet>
+                  <af:inputDate value="#{row.bindings.EndTime.inputValue}"
+                                label="#{bindings.LinesVO1.hints.EndTime.label}"
+                                required="#{bindings.LinesVO1.hints.EndTime.mandatory}"
+                                shortDesc="#{bindings.LinesVO1.hints.EndTime.tooltip}"
+                                id="id3" binding="#{Main.endTime}"
+                                autoSubmit="true"
+                                valueChangeListener="#{Main.valueChangerDate}">
+                    <f:validator binding="#{row.bindings.EndTime.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.LinesVO1.hints.EndTime.format}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:column>
+              <af:column id="c17" headerText="PLAN LAY LENGTH" align="center"
+                         width="153">
+                <af:column sortProperty="PlanYds" filterable="true"
+                           sortable="true" headerText="Yard" id="c14"
+                           align="center" width="50">
+                  <af:inputText value="#{row.bindings.PlanYds.inputValue}"
+                                label="#{bindings.LinesVO1.hints.PlanYds.label}"
+                                required="#{bindings.LinesVO1.hints.PlanYds.mandatory}"
+                                columns="#{bindings.LinesVO1.hints.PlanYds.displayWidth}"
+                                maximumLength="#{bindings.LinesVO1.hints.PlanYds.precision}"
+                                shortDesc="#{bindings.LinesVO1.hints.PlanYds.tooltip}"
+                                id="it13" binding="#{Main.yds}"
+                                partialTriggers="attribute1Id"
+                                readOnly="true">
+                    <f:validator binding="#{row.bindings.PlanYds.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="PlanInch" filterable="true"
+                           sortable="true" headerText="Inch" id="c7"
+                           align="center" width="25">
+                  <af:inputText value="#{row.bindings.PlanInch.inputValue}"
+                                label="#{bindings.LinesVO1.hints.PlanInch.label}"
+                                required="#{bindings.LinesVO1.hints.PlanInch.mandatory}"
+                                columns="#{bindings.LinesVO1.hints.PlanInch.displayWidth}"
+                                maximumLength="#{bindings.LinesVO1.hints.PlanInch.precision}"
+                                shortDesc="#{bindings.LinesVO1.hints.PlanInch.tooltip}"
+                                id="it8" binding="#{Main.inch}"
+                                partialTriggers="attribute1Id" autoSubmit="true"
+                                readOnly="true">
+                    <f:validator binding="#{row.bindings.PlanInch.validator}"/>
+                    <f:convertNumber maxFractionDigits="0"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="PlanMeter" filterable="true"
+                           sortable="true" headerText="Meter" id="c12"
+                           align="center" width="26">
+                  <af:inputText value="#{row.bindings.PlanMeter.inputValue}"
+                                label="#{bindings.LinesVO1.hints.PlanMeter.label}"
+                                required="#{bindings.LinesVO1.hints.PlanMeter.mandatory}"
+                                columns="#{bindings.LinesVO1.hints.PlanMeter.displayWidth}"
+                                maximumLength="#{bindings.LinesVO1.hints.PlanMeter.precision}"
+                                shortDesc="#{bindings.LinesVO1.hints.PlanMeter.tooltip}"
+                                id="it7" binding="#{Main.meter}"
+                                partialTriggers="attribute1Id" readOnly="true">
+                    <f:validator binding="#{row.bindings.PlanMeter.validator}"/>
+                    <f:convertNumber maxFractionDigits="2"/>
+                  </af:inputText>
+                </af:column>
+              </af:column>
+              <af:column id="c18" headerText="ACTUAL LAY LENGTH" align="center"
+                         width="134">
+                <af:column sortProperty="ActualYds" filterable="true"
+                           sortable="true" headerText="Yds" id="c1"
+                           align="center" width="50">
+                  <af:inputText value="#{row.bindings.ActualYds.inputValue}"
+                                label="#{bindings.LinesVO1.hints.ActualYds.label}"
+                                required="#{bindings.LinesVO1.hints.ActualYds.mandatory}"
+                                columns="#{bindings.LinesVO1.hints.ActualYds.displayWidth}"
+                                maximumLength="#{bindings.LinesVO1.hints.ActualYds.precision}"
+                                shortDesc="#{bindings.LinesVO1.hints.ActualYds.tooltip}"
+                                id="it11"
+                                binding="#{Main.actualYds}" autoSubmit="true"
+                                valueChangeListener="#{Main.ActualFieldsValueChangeListener}">
+                    <f:validator binding="#{row.bindings.ActualYds.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="ActualInch" filterable="true"
+                           sortable="true" headerText="Inch" id="c11"
+                           align="center" width="32">
+                  <af:inputText value="#{row.bindings.ActualInch.inputValue}"
+                                label="#{bindings.LinesVO1.hints.ActualInch.label}"
+                                required="#{bindings.LinesVO1.hints.ActualInch.mandatory}"
+                                columns="#{bindings.LinesVO1.hints.ActualInch.displayWidth}"
+                                maximumLength="#{bindings.LinesVO1.hints.ActualInch.precision}"
+                                shortDesc="#{bindings.LinesVO1.hints.ActualInch.tooltip}"
+                                id="it6"
+                                binding="#{Main.actualInch}" autoSubmit="true"
+                                valueChangeListener="#{Main.ActualFieldsValueChangeListener}">
+                    <f:validator binding="#{row.bindings.ActualInch.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="ActualMeter" filterable="true"
+                           sortable="true" headerText="Meter" id="c13"
+                           align="center" width="32">
+                  <af:inputText value="#{row.bindings.ActualMeter.inputValue}"
+                                label="#{bindings.LinesVO1.hints.ActualMeter.label}"
+                                required="#{bindings.LinesVO1.hints.ActualMeter.mandatory}"
+                                columns="#{bindings.LinesVO1.hints.ActualMeter.displayWidth}"
+                                maximumLength="#{bindings.LinesVO1.hints.ActualMeter.precision}"
+                                shortDesc="#{bindings.LinesVO1.hints.ActualMeter.tooltip}"
+                                id="it5"
+                                binding="#{Main.actualMeter}" autoSubmit="true"
+                                partialTriggers="attribute1Id">
+                    <f:validator binding="#{row.bindings.ActualMeter.validator}"/>
+                  </af:inputText>
+                </af:column>
+              </af:column>
+              <af:column sortProperty="TimeCal" filterable="true"
+                         sortable="true"
+                         headerText="USED TIME IN (MINUTES)"
+                         id="c8" align="center" width="113">
+                <af:inputText value="#{row.bindings.TimeCal.inputValue}"
+                              label="#{bindings.LinesVO1.hints.TimeCal.label}"
+                              required="#{bindings.LinesVO1.hints.TimeCal.mandatory}"
+                              columns="#{bindings.LinesVO1.hints.TimeCal.displayWidth}"
+                              maximumLength="#{bindings.LinesVO1.hints.TimeCal.precision}"
+                              shortDesc="#{bindings.LinesVO1.hints.TimeCal.tooltip}"
+                              id="it12" partialTriggers="markerIdId"
+                              binding="#{Main.timeCal}" autoSubmit="true"
+                              readOnly="false" inlineStyle="text-align:left;">
+                  <f:validator binding="#{row.bindings.TimeCal.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column sortProperty="Remarks" filterable="true"
+                         sortable="true"
+                         headerText="Remarks"
+                         id="c2" align="center" width="117">
+                <af:inputText value="#{row.bindings.Remarks.inputValue}"
+                              label="#{bindings.LinesVO1.hints.Remarks.label}"
+                              required="#{bindings.LinesVO1.hints.Remarks.mandatory}"
+                              columns="#{bindings.LinesVO1.hints.Remarks.displayWidth}"
+                              maximumLength="#{bindings.LinesVO1.hints.Remarks.precision}"
+                              shortDesc="#{bindings.LinesVO1.hints.Remarks.tooltip}"
+                              id="it16">
+                  <f:validator binding="#{row.bindings.Remarks.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="Inches New"
+                         id="c9" partialTriggers="cutNumberId" visible="false">
+                <af:inputText value="#{row.bindings.Inches.inputValue}"
+                              label="#{bindings.LinesVO1.hints.Inches.label}"
+                              required="#{bindings.LinesVO1.hints.Inches.mandatory}"
+                              columns="#{bindings.LinesVO1.hints.Inches.displayWidth}"
+                              maximumLength="#{bindings.LinesVO1.hints.Inches.precision}"
+                              shortDesc="#{bindings.LinesVO1.hints.Inches.tooltip}"
+                              id="it1" binding="#{Main.newInch}"
+                              autoSubmit="true">
+                  <f:validator binding="#{row.bindings.Inches.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.LinesVO1.hints.Inches.format}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="#{bindings.LinesVO1.hints.Yards.label}"
+                         id="c19" visible="false">
+                <af:inputText value="#{row.bindings.Yards.inputValue}"
+                              label="#{bindings.LinesVO1.hints.Yards.label}"
+                              required="#{bindings.LinesVO1.hints.Yards.mandatory}"
+                              columns="#{bindings.LinesVO1.hints.Yards.displayWidth}"
+                              maximumLength="#{bindings.LinesVO1.hints.Yards.precision}"
+                              shortDesc="#{bindings.LinesVO1.hints.Yards.tooltip}"
+                              id="it3" partialTriggers="attribute1Id"
+                              binding="#{Main.newYards}">
+                  <f:validator binding="#{row.bindings.Yards.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.LinesVO1.hints.Yards.format}"/>
+                </af:inputText>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelHeader>
+      </af:form>
+    </af:document>
+  </f:view>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:Main-->
+</jsp:root>
